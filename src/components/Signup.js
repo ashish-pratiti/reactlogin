@@ -5,7 +5,7 @@ function Signup() {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [repass, setRepass] = useState('');
-  const [petname, setPetName] = useState('');
+  //const [petname, setPetName] = useState('');
   const [error, setError] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
@@ -128,7 +128,7 @@ function Signup() {
           helperText={submitted && repass === '' ? error : repass !== pass ? 'Passwords do not match' : ''}
         />
 
-        <TextField
+        {/* <TextField
           label="petName"
           variant="outlined"
           placeholder="enter your Pet Name"
@@ -139,7 +139,7 @@ function Signup() {
           onChange={(e) => setRepass(e.target.value)}
           error={submitted && petname === ''}
           helperText={submitted && petname === '' ? error : ''}
-        />
+        /> */}
 
         <Button variant="contained" type="submit" onClick={handleSingUp} fullWidth style={{ marginBottom: '10px' }}>
           Sign Up
