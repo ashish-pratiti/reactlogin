@@ -1,13 +1,14 @@
-import {Box, Button, TextField } from '@mui/material';
+import { Box, Button, TextField } from '@mui/material';
 import React, { useState } from 'react';
 
 function Signup() {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [repass, setRepass] = useState('');
+  const [petname, setPetName] = useState('');
   const [error, setError] = useState('');
   const [submitted, setSubmitted] = useState(false);
-  
+
 
 
   const handleSingUp = (event) => {
@@ -42,7 +43,7 @@ function Signup() {
     };
 
     // Checking user is already present or not
-    const existingUser = existingUsers.find((u) =>  u.email === email);
+    const existingUser = existingUsers.find((u) => u.email === email);
     if (existingUser) {
       alert('This email is already registered.');
       return;
@@ -70,70 +71,84 @@ function Signup() {
 
   return (
     <Box
-        sx={{
-          width: 380,
-          height: 400,
-        
-          backgroundColor: '#efebe9',
-          justifyContent: 'center',
-          alignItems: 'center',
-          margin: 'auto',
-          padding: '5%',
-          flexDirection: 'column',
-          pt: '20px',
-        }}
-      >
+      sx={{
+        width: 380,
+        height: 400,
 
-        <form>
+        backgroundColor: '#efebe9',
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 'auto',
+        marginTop: '5%',
+        padding: '5%',
+        flexDirection: 'column',
+        pt: '20px',
+      }}
+    >
+
+      <form>
         <h3 style={{ marginBottom: '30px', textAlign: 'center' }}>SignUp</h3>
 
         <TextField
-            label="Email Id"
-            variant="outlined"
-            placeholder="enter email address"
-            type="email"
-            style={{ marginBottom: '20px' }}
-            fullWidth
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            error={submitted && email === ''}
-            helperText={submitted && email === '' ? error : ' '}
+          label="Email Id"
+          variant="outlined"
+          placeholder="enter email address"
+          type="email"
+          style={{ marginBottom: '20px' }}
+          fullWidth
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          error={submitted && email === ''}
+          helperText={submitted && email === '' ? error : ' '}
         />
 
         <TextField
-            label="Password"
-            variant="outlined"
-            placeholder="enter password"
-            type="password"
-            style={{ marginBottom: '20px' }}
-            fullWidth
-            value={pass}
-            onChange={(e) => setPass(e.target.value)}
-            error={submitted && pass === ''}
-            helperText={submitted && pass === '' ? error : ''}
+          label="Password"
+          variant="outlined"
+          placeholder="enter password"
+          type="password"
+          style={{ marginBottom: '20px' }}
+          fullWidth
+          value={pass}
+          onChange={(e) => setPass(e.target.value)}
+          error={submitted && pass === ''}
+          helperText={submitted && pass === '' ? error : ''}
         />
 
         <TextField
-            label="Repeat Password"
-            variant="outlined"
-            placeholder="enter password again"
-            type="password"
-            style={{ marginBottom: '30px' }}
-            fullWidth
-            value={repass}
-            onChange={(e) => setRepass(e.target.value)}
-            error={submitted && repass === ''}
-            helperText={submitted && repass === '' ? error : repass !== pass ? 'Passwords do not match' : ''}
+          label="Repeat Password"
+          variant="outlined"
+          placeholder="enter password again"
+          type="password"
+          style={{ marginBottom: '30px' }}
+          fullWidth
+          value={repass}
+          onChange={(e) => setRepass(e.target.value)}
+          error={submitted && repass === ''}
+          helperText={submitted && repass === '' ? error : repass !== pass ? 'Passwords do not match' : ''}
         />
 
-        <Button variant="contained" type="submit" onClick={handleSingUp} fullWidth style={{marginBottom:'10px'}}>
-            Sign Up
+        <TextField
+          label="petName"
+          variant="outlined"
+          placeholder="enter your Pet Name"
+          type="text"
+          style={{ marginBottom: '30px' }}
+          fullWidth
+          value={petname}
+          onChange={(e) => setRepass(e.target.value)}
+          error={submitted && petname === ''}
+          helperText={submitted && petname === '' ? error : ''}
+        />
+
+        <Button variant="contained" type="submit" onClick={handleSingUp} fullWidth style={{ marginBottom: '10px' }}>
+          Sign Up
         </Button>
-        <Button variant="outlined" type="submit" onClick={handleReset} fullWidth style={{marginBottom:'10px'}}>
-            RESET
+        <Button variant="outlined" type="submit" onClick={handleReset} fullWidth style={{ marginBottom: '10px' }}>
+          RESET
         </Button>
-        </form>
-      </Box>
+      </form>
+    </Box>
   );
 }
 

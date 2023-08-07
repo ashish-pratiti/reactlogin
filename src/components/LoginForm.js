@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Box, Button, TextField } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 
-function LoginForm() {
+function LoginForm({authentication, isAuthenticated}) {
+  
+  const navigate= useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -26,16 +28,20 @@ function LoginForm() {
    // Checking username and password
    const existingUser = existingUsers.find((u) =>  u.email === email && u.password === password );
    if(existingUser){ 
-       alert('Login Successful!');
-   handleReset();
-   return;
+      alert('Password Authentication Successful!');
+      handleReset();
+      authentication(existingUser);
+      navigate('/userdasboard');
+
+
+      
    }
     else{
         alert('username or password is incorrect!');
-        return;
+        
     }
     
-    
+    return;
   };
 
   const handleReset = () => {
@@ -56,6 +62,7 @@ function LoginForm() {
           justifyContent: 'center',
           alignItems: 'center',
           margin: 'auto',
+          marginTop:'5%',
           padding: '5%',
           flexDirection: 'column',
           pt: '20px',
@@ -108,7 +115,7 @@ function LoginForm() {
             marginTop: '10px',
             }}
         >
-            <Link to="/signup" style={{ width: '20%', textDecoration: 'none' }}>
+            <Link to="/signupform" style={{ width: '20%', textDecoration: 'none' }}>
             <Button variant="text" size="small" fullWidth>
                 Sign Up
             </Button>
