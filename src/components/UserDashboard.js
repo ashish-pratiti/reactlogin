@@ -1,6 +1,6 @@
 import React from 'react'
 
-const UserProfile = ({userName}) => {
+const UserDashboard = ({userName}) => {
   return (
     
         <center style={{marginTop:'20%'}}><h1>Welcome {userName} !</h1></center>
@@ -8,4 +8,4 @@ const UserProfile = ({userName}) => {
   )
 }
 
-export default UserProfile
+export default UserDashboard

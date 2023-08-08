@@ -6,27 +6,96 @@ function Signup() {
   const [pass, setPass] = useState('');
   const [repass, setRepass] = useState('');
   //const [petname, setPetName] = useState('');
-  const [error, setError] = useState('');
-  const [submitted, setSubmitted] = useState(false);
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
+  const [rePasswordError, setRePasswordError] = useState('');
+  
 
+  const isEmailValid = (email) => {
+    return /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email);
+  };
+  
+  const handleEmailChange = (e) => {
+    const newEmail = e.target.value;
+    setEmail(newEmail);
+    
+    if (newEmail === '') {
+      setEmailError('');
+    } else if (!isEmailValid(newEmail)) {
+      setEmailError('Invalid email format.');
+    } else {
+      setEmailError('');
+    }
+  };
+
+  const handlePasswordChange = (e) => {
+    const newPass = e.target.value;
+    setPass(newPass);
+    setPasswordError('');
+    if(newPass===''){
+      setPasswordError('');
+
+    }
+    // Password format validation
+    else if (
+      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$!%*?&])[a-zA-Z\d@#$!%*?&]{8,}$/.test(
+        newPass
+      )
+    ) {
+      setPasswordError(
+        'Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character (@,#, $, !, %, *, ?, &).'
+      );
+    } else {
+      setPasswordError('');
+    }
+  };
+
+  const handleRePasswordChange = (e) => {
+    setRepass(e.target.value);
+
+    if(e.target.value === ''){
+      setRePasswordError('');
+    }
+    else if (e.target.value !== pass) {
+      setRePasswordError('Passwords do not match');
+    } else {
+      setRePasswordError('');
+    }
+  };
+  
+ 
+  
+  
+  
+  
+  
+
+  
 
   const handleSingUp = (event) => {
     event.preventDefault();
-    setSubmitted(true);
+   
 
     if (email === '') {
-      setError('Email Id can not be empty.');
+      setEmailError('Email Id can not be empty.');
       return;
     }
-
+    if (!isEmailValid(email)) {
+      setEmailError('Invalid email format.');
+      return;
+    }
+    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[a-zA-Z\d@$!%*?&]{8,}$/g.test(pass)) {
+      setPasswordError('Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character (@, $, !, %, *, ?, &).');
+      return;
+    }
     if (pass === '') {
-      setError('Password can not be empty');
+      setPasswordError('Password can not be empty');
       return;
     }
 
     if (repass !== pass) {
-      setError('Passwords do not match');
+      setRePasswordError('Passwords do not match');
       return;
     }
 
@@ -65,54 +134,63 @@ function Signup() {
     setEmail('');
     setPass('');
     setRepass('');
-    setError('');
-    setSubmitted(false);
+    setEmailError('');
+    setPasswordError('');
+    setRePasswordError('');
+    
   };
 
   return (
     <Box
-      sx={{
-        width: 380,
-        height: 400,
-
-        backgroundColor: '#efebe9',
-        justifyContent: 'center',
-        alignItems: 'center',
+      style={{
+        minWidth:'md',
+        display:'flex',
+        flexDirection:'column',
+        alignItems:'center',
         margin: 'auto',
-        marginTop: '5%',
-        padding: '5%',
-        flexDirection: 'column',
-        pt: '20px',
+        //marginTop:'5%',
+        maxWidth: '470px',
+        
+        
+        
       }}
     >
 
-      <form>
+      <form style={{maxWidth:470, padding:'16px'}}>
         <h3 style={{ marginBottom: '30px', textAlign: 'center' }}>SignUp</h3>
 
         <TextField
-          label="Email Id"
+          label={
+            <span>
+              Email Id<span style={{ color: 'red' }}>*</span>
+            </span>
+          }
           variant="outlined"
           placeholder="enter email address"
           type="email"
           style={{ marginBottom: '20px' }}
           fullWidth
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          error={submitted && email === ''}
-          helperText={submitted && email === '' ? error : ' '}
-        />
+          onChange={handleEmailChange}
+          error={emailError !== ''}
+          helperText={emailError}
+          />
 
         <TextField
-          label="Password"
-          variant="outlined"
-          placeholder="enter password"
-          type="password"
-          style={{ marginBottom: '20px' }}
-          fullWidth
-          value={pass}
-          onChange={(e) => setPass(e.target.value)}
-          error={submitted && pass === ''}
-          helperText={submitted && pass === '' ? error : ''}
+             label={
+              <span>
+                Password<span style={{ color: 'red' }}>*</span>
+              </span>
+            }
+            variant="outlined"
+            placeholder="enter password"
+            type="password"
+            style={{ marginBottom: '20px' }}
+            fullWidth
+            value={pass}
+            onChange={handlePasswordChange}
+            error={passwordError !== ''}
+            helperText={passwordError}
         />
 
         <TextField
@@ -120,26 +198,15 @@ function Signup() {
           variant="outlined"
           placeholder="enter password again"
           type="password"
-          style={{ marginBottom: '30px' }}
+          style={{ marginBottom: '20px' }}
           fullWidth
           value={repass}
-          onChange={(e) => setRepass(e.target.value)}
-          error={submitted && repass === ''}
-          helperText={submitted && repass === '' ? error : repass !== pass ? 'Passwords do not match' : ''}
+          onChange={handleRePasswordChange}
+            error={rePasswordError !== ''}
+            helperText={rePasswordError}
         />
 
-        {/* <TextField
-          label="petName"
-          variant="outlined"
-          placeholder="enter your Pet Name"
-          type="text"
-          style={{ marginBottom: '30px' }}
-          fullWidth
-          value={petname}
-          onChange={(e) => setRepass(e.target.value)}
-          error={submitted && petname === ''}
-          helperText={submitted && petname === '' ? error : ''}
-        /> */}
+       
 
         <Button variant="contained" type="submit" onClick={handleSingUp} fullWidth style={{ marginBottom: '10px' }}>
           Sign Up

@@ -23,29 +23,32 @@ function App() {
   return (
     <BrowserRouter>
       <Menu isAuthenticated={isAuthenticated} userName={user}/>
+    
         <Routes>
-          {/* public routes */}
-          <Route path="/"element={<HomePage/>}/>
-          <Route path="/loginform"element={<LoginForm authentication={handleLoginFun} isAuthenticated={isAuthenticated} />}/>
-          <Route path="/signupform" element={<Signup />} />
-        
 
-          {/* proteced routes */}
-          <Route
-           path="/userdasboard"
-           element={
-             isAuthenticated ? (
-               <UserDasboard userName={user}/>
-             ) : (
-               <LoginForm authentication={handleLoginFun} isAuthenticated={isAuthenticated}  />
-             )
-           }
-          />
+            {/* public routes */}
+            <Route path="/"element={<HomePage/>}/>
+            <Route path="/loginform"element={<LoginForm authentication={handleLoginFun} isAuthenticated={isAuthenticated} />}/>
+            <Route path="/signupform" element={<Signup />} />
           
-          
-      
-          <Route path="*" element={<Navigate to="/" />} />
+
+            {/* proteced routes */}
+            <Route
+            path="/userdasboard"
+            element={
+              isAuthenticated ? (
+                <UserDasboard userName={user}/>
+              ) : (
+                <LoginForm authentication={handleLoginFun} isAuthenticated={isAuthenticated}  />
+              )
+            }
+            />
+            
+            
+        
+            <Route path="*" element={<Navigate to="/" />} />
         </Routes>
+        
       <Footer />
     </BrowserRouter>
   );
